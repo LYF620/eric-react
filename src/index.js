@@ -13,4 +13,19 @@ const element = (
 )
 
 const container = document.getElementById('root')
-Eric.render(element, container)
+
+const updateValue = (e) => {
+  rerender(e.target.value)
+}
+
+const rerender = (value) => {
+  const element = (
+    <div>
+      <input onInput={updateValue} value={value} />
+      <h2>Hello {value}</h2>
+    </div>
+  )
+  Eric.render(element, container)
+}
+
+rerender('World')
