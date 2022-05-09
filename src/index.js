@@ -1,31 +1,13 @@
 import { Eric } from './EricReact'
-import ReactDOM from 'react-dom'
-import React from 'react'
-// step 1 : 实现createElement
 
-// 如果我们有这样的注释，当 babel 编译 JSX 时，它将使用我们定义的函数
+// 实现函数式组件
+// 1、函数式组件的fiber不存在dom node
+// 2、相比于之前的实现，child来源于函数式组件的内容，而不是props
 /** @jsx Eric.createElement */
-const element = (
-  <div id="foo">
-    <a>bar</a>
-    <b />
-  </div>
-)
-
+function Counter() {
+  const [state, setState] = Eric.useState(1)
+  return <h1 onClick={() => setState((c) => c + 1)}>Count: {state}</h1>
+}
+const element = <Counter />
 const container = document.getElementById('root')
-
-const updateValue = (e) => {
-  rerender(e.target.value)
-}
-
-const rerender = (value) => {
-  const element = (
-    <div>
-      <input onInput={updateValue} value={value} />
-      <h2>Hello {value}</h2>
-    </div>
-  )
-  Eric.render(element, container)
-}
-
-rerender('World')
+Eric.render(element, container)
